@@ -1,21 +1,20 @@
 import { useState } from "react";
 import "./App.css";
 import Axios from "axios";
-import Draggable from "react-draggable";
+import PokeCard from "./PokeCard";
 
 function App() {
   const [pokemon, setPokemon] = useState("");
-  const [pokemonData, setPokemonData] = useState({});
+  const [pokemonData, setPokemonData] = useState([]);
 
   function getPokemon() {
     Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`).then(
       (response) => {
-        setPokemonData({
-          name: pokemon,
-          species: response.data.species.name,
-          img: response.data.sprites.front_default,
+        setPokemonData([...pokemonData, {
           hp: response.data.stats[0].base_stat,
-        });
+          img: response.data.sprites.front_default,
+        }])
+        console.log(pokemonData)
       }
     );
   }
@@ -34,9 +33,9 @@ function App() {
         search
       </button>
       <div className="flex justify-center">
-      <Draggable><img src={pokemonData.img}
-      className="m-16 w-52"
-      /></Draggable>
+        {pokemonData.map((guy) => {(
+          <PokeCard img={guy.img} hp={guy.hp} />
+        )})}
       </div>
     </div>
   );
