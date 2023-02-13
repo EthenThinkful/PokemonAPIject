@@ -77,6 +77,11 @@ export default function PokemonRender() {
 
   };
 
+  const handlePoke = (e) => {
+    e.preventDefault();
+    setAbility(!ability);
+  }
+
   const handlePoke2 = (e) => {
     e.preventDefault();
     setAbilityTwo(!abilityTwo)
